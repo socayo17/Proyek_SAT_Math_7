@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyek SAT Matematika Kelas 7</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #facc15, transparent 28%),
+                  radial-gradient(circle at top right, #ec4899, transparent 28%),
+                  linear-gradient(135deg, #5b21b6, #2563eb, #06b6d4);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 28px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 950px;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      text-shadow: 0 5px 15px rgba(0,0,0,0.28);
+      margin-bottom: 8px;
+    }
+
+    h2.subtitle-title {
+      font-size: 30px;
+      color: #fef08a;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .subtitle {
+      font-size: 17px;
+      line-height: 1.55;
+      opacity: 0.96;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 950px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.30);
+      border-radius: 28px;
+      padding: 24px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 22px 55px rgba(0,0,0,0.25);
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .instructions {
+      background: rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 15px 18px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .class-bubble, .question-bubble {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: 5px solid rgba(255,255,255,0.75);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: 900;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.28);
+      transition: 0.25s;
+      position: relative;
+      overflow: hidden;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .class-bubble { font-size: 34px; min-height: 170px; }
+    .question-bubble { font-size: 28px; }
+
+    .class-bubble span, .question-bubble span {
+      font-size: 13px;
+      margin-top: 5px;
+      opacity: 0.95;
+    }
+
+    .class-bubble::after, .question-bubble::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      width: 30px;
+      height: 30px;
+      background: rgba(255,255,255,0.36);
+      border-radius: 50%;
+    }
+
+    .class-bubble:hover, .question-bubble:hover {
+      transform: scale(1.06) rotate(-2deg);
+      filter: brightness(1.08);
+    }
+
+    .class-bubble.active {
+      outline: 5px solid #fef08a;
+      transform: scale(1.05);
+    }
+
+    .question-bubble.locked {
+      background: #6b7280 !important;
+      cursor: not-allowed;
+      opacity: 0.55;
+      animation: none;
+    }
+
+    .question-bubble.locked:hover { transform: none; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .c1 { background: linear-gradient(135deg, #f97316, #ef4444); }
+    .c2 { background: linear-gradient(135deg, #22c55e, #14b8a6); }
+    .c3 { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+    .c4 { background: linear-gradient(135deg, #a855f7, #ec4899); }
+    .c5 { background: linear-gradient(135deg, #eab308, #f97316); }
+    .c6 { background: linear-gradient(135deg, #06b6d4, #6366f1); }
+    .c7 { background: linear-gradient(135deg, #fb7185, #be123c); }
+    .c8 { background: linear-gradient(135deg, #84cc16, #16a34a); }
+    .c9 { background: linear-gradient(135deg, #8b5cf6, #4338ca); }
+    .c10 { background: linear-gradient(135deg, #f43f5e, #f59e0b); }
+    .c11 { background: linear-gradient(135deg, #0ea5e9, #1d4ed8); }
+    .c12 { background: linear-gradient(135deg, #d946ef, #7c3aed); }
+    .c13 { background: linear-gradient(135deg, #10b981, #65a30d); }
+    .c14 { background: linear-gradient(135deg, #f59e0b, #dc2626); }
+    .c15 { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+    .c16 { background: linear-gradient(135deg, #6366f1, #9333ea); }
+    .c17 { background: linear-gradient(135deg, #e11d48, #fb7185); }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select, input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    button, .link-btn {
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 16px;
+      padding: 14px 20px;
+      font-size: 16px;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    button:hover, .link-btn:hover { transform: translateY(-2px); }
+
+    .primary-btn { background: #facc15; color: #1f2937; }
+    .danger-btn { background: #ef4444; color: white; }
+    .blue-btn { background: #2563eb; color: white; }
+    .green-btn { background: #16a34a; color: white; }
+
+    .bubble-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .student-chip {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+      font-weight: bold;
+    }
+
+    .warning {
+      background: #fef3c7;
+      color: #92400e;
+      border-left: 6px solid #f59e0b;
+      border-radius: 16px;
+      padding: 14px 16px;
+      line-height: 1.6;
+      margin: 14px 0;
+      font-weight: bold;
+    }
+
+    .question-card {
+      display: none;
+      width: 100%;
+      max-width: 950px;
+      background: white;
+      color: #111827;
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.30);
+      margin-bottom: 28px;
+    }
+
+    .question-card h2 {
+      color: #4f46e5;
+      margin-bottom: 12px;
+      font-size: 28px;
+    }
+
+    .data-box {
+      background: #f3f4f6;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 15px 0;
+      line-height: 1.75;
+      font-size: 16.5px;
+      white-space: pre-line;
+    }
+
+    .task-list {
+      margin-left: 22px;
+      line-height: 1.85;
+      font-size: 16.5px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .hidden { display: none; }
+
+    .footer-note {
+      margin-top: auto;
+      text-align: center;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      h1 { font-size: 32px; }
+      h2.subtitle-title { font-size: 24px; }
+      .class-grid { grid-template-columns: 1fr; }
+      .bubble-grid { grid-template-columns: repeat(3, 1fr); }
+      .class-bubble { min-height: 130px; }
+    }
+
+    @media (max-width: 480px) {
+      .bubble-grid { grid-template-columns: repeat(2, 1fr); }
+      .panel, .question-card { padding: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero" id="welcomeHero">
+      <div class="badge">Proyek SAT Matematika</div>
+      <h1>Selamat Datang di Proyek SAT Matematika Kelas 7</h1>
+      <h2 class="subtitle-title">Penyajian Data</h2>
+      <p class="subtitle">
+        Ikuti setiap langkah dengan baik, teliti, dan jujur. Pilih kelas, pilih nama, lalu pilih satu bubble pertanyaan.
+      </p>
+    </section>
+
+    <section class="panel" id="loginPage">
+      <h2 class="section-title">1. Pilih Kelas</h2>
+      <div class="instructions">
+        Pilih kelas terlebih dahulu. Setelah itu, pilih nama siswa pada dropdown yang tersedia.
+      </div>
+
+      <div class="class-grid">
+        <div class="class-bubble c3" onclick="selectClass('7A')">7A<span></div>
+        <div class="class-bubble c4" onclick="selectClass('7B')">7B<span></div>
+        <div class="class-bubble c5" onclick="selectClass('7C')">7C<span></div>
+      </div>
+
+      <label for="studentSelect">2. Pilih Nama Siswa</label>
+      <select id="studentSelect">
+        <option value="">Pilih kelas terlebih dahulu</option>
+      </select>
+
+      <button class="primary-btn" onclick="enterBubblePage()">Masuk ke Bubble Pertanyaan</button>
+    </section>
+
+    <section class="panel hidden" id="bubblePage">
+      <div class="student-chip" id="studentChip">Kelas: - | Nama: -</div>
+      <h2 class="section-title">Pilih Bubble Pertanyaan</h2>
+      <div class="instructions">
+        Pilih <strong>satu bubble</strong> pertanyaan.
+      </div>
+      <div class="warning">
+        PERINGATAN: Setelah bubble dipilih, kamu tidak bisa mengganti ke bubble lain. Jangan refresh atau reload halaman.
+      </div>
+      <div class="bubble-grid" id="bubbleGrid"></div>
+    </section>
+
+    <section class="question-card" id="questionCard">
+      <h2 id="questionTitle">Soal Digital</h2>
+      <p id="identityText"></p>
+      <div class="data-box" id="questionData"></div>
+
+      <h3>Tugas Siswa</h3>
+      <ol class="task-list" id="taskList"></ol>
+
+      <div class="action-row">
+        <a class="link-btn blue-btn" id="spreadsheetLink" href="https://docs.google.com/spreadsheets/" target="_blank">Buka Spreadsheet</a>
+        <a class="link-btn green-btn" id="submitLink" href="https://forms.google.com/" target="_blank">Submit Link Tugas</a>
+        <button class="danger-btn" onclick="resetForTeacher()">Reset Khusus Guru</button>
+      </div>
+    </section>
+
+    <p class="footer-note">SAT Math Grade 7 — Data Presentation Project</p>
+  </main>
+
+  <script>
+    const students = {
+      "7A": [
+        "Charissa Nesiah Nyoto", "Cornelius Jeremy Pramono", "Craig Cristo Kuncoro", "Edward Joshua Myles",
+        "Emanuella Gwen Kurniawan", "Gregory Christian Tafati Marunduri", "Jefferson Kellen Turino",
+        "Jenevive Allina Liman", "Jeslyn De Lauwren", "Joel Haven Yuniman Tjandra", "Maximus Michael Martien",
+        "Neiska Leann Nugroho", "Nicholas Ethan Theodore", "Reinner Dominic Nugroho", "Reynard Julius Gunawan",
+        "Stefanie Griselda Cahyadi", "Steward Ethan Pangestu"
+      ],
+      "7B": [
+        "Abigail Victoria Umboh", "Alvaro Gavriel Wijayanoto", "Cayden Nathanael Bunardi", "Felix Kenzo Sidharta",
+        "Fionette Ophelia Lasmono", "Grace Aileen Luntungan", "Guanglie Yu", "Jillian Christabelle Chandra",
+        "Joaquin Luiz Alexander", "Jocelyn Anna Wijaya", "Kenneth Hery Ng", "Kent Walden Wiyono",
+        "Matthew Kevin Sulistio", "Nicolas Wayne Siady", "Osten Eduardo Gaidek", "Shine Michael Tala",
+        "Terra Emanuela Thungriallu"
+      ],
+      "7C": [
+        "Aaron Chong", "Austin Rasyid Gandha", "Gilbert Theo Tjandra", "Grace Adalee Wibisono",
+        "Ilona Seraphine Sutanto", "Jacqueline Winona Koestiono", "Jeremy Jonathan Gunawan", "Joshero Revanael Budiman",
+        "Jovina Ellen Setiawan", "Lovina Laurentia Ho", "Marvelio Starenzo", "Matthew Sutjiono",
+        "Mikhael Evangel Pradana", "Miyuki Karensia Harsono", "Nicolette Wynne Liman", "Samuel Billy Yuliyanto",
+        "Tjan Owen Reynard Chandra"
+      ]
+    };
+
+    const questionBank = [
+  {
+    "title": "Festival Minuman Sekolah",
+    "data": "Pada acara Festival Minuman Sekolah, panitia kelas 7 membuka stan jus mangga untuk para pengunjung. Selama masa persiapan festival, ketua panitia mencatat jumlah gelas jus mangga yang terjual setiap beberapa jam. Data tersebut nantinya akan digunakan untuk menentukan jumlah bahan yang perlu disiapkan pada hari pelaksanaan acara.\n\n  Data Jumlah Gelas Jus Mangga yang Terjual\n18, 22, 20, 24, 28, 30, 26, 22, 25, 27,\n30, 26, 24, 21, 20, 18, 24, 28, 31, 26,\n22, 24, 29, 20, 18",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 24 gelas muncul berapa kali?",
+      "Jumlah penjualan terbanyak berada pada angka berapa gelas?",
+      "Berapa selisih antara jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Program Membaca Perpustakaan",
+    "data": "Perpustakaan sekolah sedang mengadakan program Gerakan Membaca 15 Menit untuk meningkatkan minat baca siswa. Setiap hari, petugas perpustakaan mencatat jumlah siswa yang datang untuk membaca atau meminjam buku. Data tersebut akan digunakan untuk mengetahui pola kunjungan siswa selama program literasi berlangsung.\n\n  Data Jumlah Pengunjung Perpustakaan\n25, 28, 24, 32, 35, 30, 27, 29, 31, 32,\n35, 26, 25, 28, 30, 33, 35, 27, 24, 29,\n30, 32, 34, 25, 27",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengunjung sebanyak 35 siswa muncul berapa kali?",
+      "Jumlah pengunjung paling sedikit berada pada angka berapa siswa?",
+      "Berapa selisih jumlah pengunjung terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Roti Gandum",
+    "data": "Kantin sehat sekolah mulai menjual roti gandum sebagai bagian dari program hidup sehat siswa. Petugas kantin mencatat jumlah roti yang terjual setiap beberapa waktu agar mereka dapat mengetahui minat siswa terhadap menu sehat tersebut.\n\n  Data Jumlah Roti Gandum yang Terjual\n20, 24, 22, 26, 30, 34, 28, 25, 27, 31,\n34, 29, 22, 24, 26, 30, 35, 28, 20, 23,\n24, 27, 30, 34, 28",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 34 roti muncul berapa kali?",
+      "Jumlah penjualan paling sedikit berada pada angka berapa roti?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Hasil Panen Kebun Sekolah",
+    "data": "Siswa kelas 7 mengikuti proyek penghijauan sekolah dengan menanam tomat di kebun belakang sekolah. Setiap beberapa minggu, hasil panen tomat ditimbang dan dicatat untuk melihat perkembangan tanaman yang mereka rawat bersama.\n\n  Data Hasil Panen Tomat\n30, 34, 32, 38, 40, 36, 35, 33, 39, 41,\n36, 30, 34, 32, 38, 42, 36, 31, 34, 33,\n38, 40, 37, 30, 34",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Hasil panen sebanyak 38 kg muncul berapa kali?",
+      "Hasil panen terbesar berada pada angka berapa kilogram?",
+      "Berapa selisih hasil panen terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Kebiasaan Membaca Siswa",
+    "data": "Dalam program literasi sekolah, guru Bahasa Indonesia meminta siswa mencatat jumlah buku yang berhasil mereka baca selama satu bulan. Data tersebut digunakan untuk mengetahui kebiasaan membaca siswa kelas 7 dan melihat apakah minat baca siswa meningkat.\n\n  Data Jumlah Buku yang Dibaca Siswa\n2, 3, 4, 2, 5, 3, 4, 2, 3, 5,\n4, 2, 3, 4, 6, 2, 4, 3, 5, 2,\n3, 4, 2, 5, 3",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah membaca sebanyak 4 buku muncul berapa kali?",
+      "Jumlah membaca terbanyak berada pada angka berapa buku?",
+      "Berapa selisih data membaca terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Nilai Ulangan IPA",
+    "data": "Setelah ulangan IPA selesai dilaksanakan, Bu Rina ingin mengetahui perkembangan hasil belajar siswa kelas 7. Beliau kemudian mencatat seluruh nilai siswa agar dapat melihat nilai yang paling sering diperoleh dan menentukan materi yang masih perlu dipelajari kembali.\n\n  Data Nilai IPA Siswa\n70, 75, 80, 70, 85, 75, 80, 90, 75, 82,\n70, 85, 75, 80, 90, 76, 80, 85, 70, 75,\n80, 90, 75, 85, 72",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Nilai 75 muncul berapa kali?",
+      "Nilai tertinggi berada pada angka berapa?",
+      "Berapa selisih nilai tertinggi dan terendah?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Suhu Kota Surabaya",
+    "data": "BMKG Kota Surabaya mencatat perubahan suhu udara setiap hari selama musim kemarau. Data tersebut digunakan untuk mengetahui perubahan cuaca dan membantu masyarakat mempersiapkan aktivitas harian mereka.\n\n  Data Suhu Harian Kota Surabaya\n29, 30, 31, 30, 32, 33, 31, 30, 31, 32,\n34, 31, 29, 30, 31, 32, 33, 31, 29, 30,\n31, 32, 33, 30, 32",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Suhu 31°C muncul berapa kali?",
+      "Suhu tertinggi berada pada angka berapa derajat Celsius?",
+      "Berapa selisih suhu tertinggi dan terendah?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Es Teh",
+    "data": "Seorang penjual es teh di depan sekolah mencatat jumlah gelas es teh yang terjual setiap hari selama cuaca panas berlangsung. Data tersebut digunakan untuk mengetahui hari dengan penjualan tertinggi sehingga penjual dapat menyiapkan stok es batu dan teh yang cukup.\n\n  Data Jumlah Gelas Es Teh yang Terjual\n16, 20, 18, 22, 26, 28, 24, 20, 22, 27,\n28, 24, 18, 20, 23, 26, 28, 24, 16, 18,\n20, 22, 26, 29, 24",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Penjualan sebanyak 24 gelas muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa gelas?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Pertumbuhan Tanaman Kacang Hijau",
+    "data": "Kelompok IPA kelas 7 melakukan percobaan menanam kacang hijau di rumah masing-masing. Setiap beberapa hari, tinggi tanaman diukur dan dicatat untuk melihat perkembangan pertumbuhan tanaman selama masa pengamatan.\n\n  Data Tinggi Tanaman Kacang Hijau\n5, 8, 12, 15, 18, 20, 12, 15, 18, 21,\n8, 12, 15, 18, 20, 5, 9, 12, 15, 18,\n20, 5, 8, 13, 15",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Tinggi tanaman 15 cm muncul berapa kali?",
+      "Tinggi tanaman terbesar berada pada angka berapa sentimeter?",
+      "Berapa selisih tinggi tanaman terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Olahraga Favorit Siswa",
+    "data": "OSIS sekolah melakukan survei untuk mengetahui olahraga favorit siswa kelas 7. Hasil survei tersebut nantinya akan digunakan untuk menentukan cabang olahraga yang akan dipertandingkan pada acara class meeting akhir semester.\n\n  Data Jumlah Siswa pada Setiap Olahraga Favorit\n8, 5, 4, 3, 8, 6, 4, 3, 8, 5,\n4, 3, 9, 5, 4, 3, 8, 5, 4, 3,\n8, 5, 4, 3, 8",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah siswa sebanyak 8 orang muncul berapa kali?",
+      "Jumlah siswa paling sedikit berada pada angka berapa orang?",
+      "Berapa selisih jumlah siswa terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Pengunjung Taman Kota",
+    "data": "Pada akhir pekan, petugas taman kota mencatat jumlah pengunjung yang datang setiap beberapa jam. Data tersebut digunakan untuk mengetahui waktu paling ramai sehingga petugas dapat menyiapkan area parkir dan tempat duduk tambahan bagi pengunjung.\n\n  Data Jumlah Pengunjung Taman Kota\n35, 40, 38, 42, 45, 48, 50, 42, 40, 39,\n45, 48, 50, 43, 40, 38, 35, 41, 42, 45,\n48, 50, 42, 40, 38",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengunjung sebanyak 42 orang muncul berapa kali?",
+      "Jumlah pengunjung terbanyak berada pada angka berapa orang?",
+      "Berapa selisih jumlah pengunjung terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Donat Mini",
+    "data": "Sebuah toko roti sedang mengadakan promo donat mini selama liburan sekolah. Pemilik toko mencatat jumlah donat yang terjual setiap hari untuk mengetahui jenis rasa yang paling banyak diminati pelanggan.\n\n  Data Jumlah Donat Mini yang Terjual\n12, 15, 18, 20, 22, 24, 26, 18, 20, 23,\n24, 26, 15, 18, 20, 22, 25, 26, 12, 15,\n18, 20, 22, 24, 26",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 20 donat muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa donat?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Waktu Tidur Siswa",
+    "data": "Guru BK melakukan survei mengenai waktu tidur siswa kelas 7 setiap malam. Data tersebut digunakan untuk mengetahui apakah siswa sudah memiliki waktu istirahat yang cukup sebelum belajar di sekolah.\n\n  Data Lama Waktu Tidur Siswa\n6, 7, 8, 7, 8, 9, 7, 8, 6, 7,\n8, 9, 7, 8, 6, 7, 8, 9, 7, 8,\n6, 7, 8, 9, 7",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Lama tidur sebanyak 8 jam muncul berapa kali?",
+      "Lama tidur paling sedikit berada pada angka berapa jam?",
+      "Berapa selisih waktu tidur terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Tiket Wisata",
+    "data": "Sebuah tempat wisata mencatat jumlah tiket yang terjual selama musim liburan sekolah. Data tersebut digunakan untuk mengetahui jumlah pengunjung yang datang dan menentukan hari dengan kunjungan tertinggi.\n\n  Data Jumlah Tiket Wisata yang Terjual\n55, 60, 58, 62, 65, 68, 70, 62, 61, 58,\n65, 68, 70, 62, 60, 58, 55, 60, 62, 65,\n68, 71, 62, 60, 58",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah tiket sebanyak 62 lembar muncul berapa kali?",
+      "Jumlah tiket tertinggi berada pada angka berapa lembar?",
+      "Berapa selisih jumlah tiket terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penggunaan Internet Siswa",
+    "data": "Sekolah melakukan survei mengenai lama penggunaan internet siswa setiap hari. Data tersebut digunakan untuk mengetahui apakah siswa menggunakan internet lebih banyak untuk belajar atau bermain game.\n\n  Data Lama Penggunaan Internet Siswa\n1, 2, 3, 2, 4, 3, 2, 1, 3, 2,\n4, 2, 3, 1, 2, 3, 5, 2, 1, 3,\n2, 4, 3, 2, 1",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Lama penggunaan internet sebanyak 2 jam muncul berapa kali?",
+      "Lama penggunaan internet tertinggi berada pada angka berapa jam?",
+      "Berapa selisih penggunaan internet terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Mie Ayam",
+    "data": "Seorang penjual mie ayam di dekat sekolah mencatat jumlah porsi yang terjual setiap hari selama satu bulan terakhir. Data tersebut digunakan untuk mengetahui hari dengan penjualan tertinggi sehingga ia dapat menyiapkan stok bahan makanan yang cukup.\n\n  Data Jumlah Porsi Mie Ayam yang Terjual\n20, 22, 24, 26, 30, 32, 28, 22, 24, 27,\n30, 32, 28, 20, 22, 24, 26, 31, 32, 28,\n20, 22, 24, 26, 30",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 32 porsi muncul berapa kali?",
+      "Jumlah penjualan paling sedikit berada pada angka berapa porsi?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Tinggi Badan Siswa",
+    "data": "Guru olahraga mencatat tinggi badan siswa kelas 7 sebagai bagian dari pemeriksaan kesehatan tahunan sekolah. Data tersebut digunakan untuk mengetahui perkembangan pertumbuhan siswa selama satu tahun terakhir.\n\n  Data Tinggi Badan Siswa\n145, 148, 150, 152, 155, 158, 160, 152, 150, 148,\n155, 158, 161, 152, 150, 148, 145, 149, 150, 152,\n155, 158, 160, 152, 150",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Tinggi badan 152 cm muncul berapa kali?",
+      "Tinggi badan tertinggi berada pada angka berapa sentimeter?",
+      "Berapa selisih tinggi badan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Es Krim",
+    "data": "Sebuah toko es krim mencatat jumlah cup es krim yang terjual selama cuaca panas beberapa minggu terakhir. Data tersebut digunakan untuk menentukan jumlah stok es krim yang perlu disiapkan setiap harinya agar tidak cepat habis.\n\n  Data Jumlah Cup Es Krim yang Terjual\n14, 16, 18, 20, 22, 24, 26, 18, 20, 23,\n24, 26, 16, 18, 20, 22, 24, 27, 14, 16,\n18, 20, 22, 24, 26",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 24 cup muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa cup?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Jumlah Langkah Kaki",
+    "data": "Dalam program hidup sehat sekolah, siswa diminta mencatat jumlah langkah kaki mereka setiap hari menggunakan aplikasi kesehatan. Data tersebut digunakan untuk mengetahui tingkat aktivitas fisik siswa selama mengikuti program kesehatan sekolah.\n\n  Data Jumlah Langkah Kaki Siswa\n4000, 4500, 4200, 4800, 5000, 5500, 5200, 4500, 4200, 4800,\n5000, 5600, 5200, 4000, 4500, 4200, 4800, 5000, 5500, 5200,\n4000, 4500, 4300, 4800, 5000",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah langkah sebanyak 5000 langkah muncul berapa kali?",
+      "Jumlah langkah tertinggi berada pada angka berapa langkah?",
+      "Berapa selisih jumlah langkah terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Air Mineral",
+    "data": "Selama kegiatan Class Meeting, koperasi sekolah menyediakan berbagai minuman untuk siswa dan guru yang hadir. Agar persediaan air mineral tidak cepat habis, petugas koperasi mencatat jumlah botol air mineral yang terjual setiap beberapa jam selama acara berlangsung.\n\n  Data Jumlah Botol Air Mineral yang Terjual\n30, 32, 35, 34, 38, 40, 36, 32, 35, 34,\n38, 41, 36, 30, 32, 35, 34, 38, 40, 36,\n31, 32, 35, 34, 38",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 38 botol muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa botol?",
+      "Berapa selisih antara jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Survei Genre Musik Siswa",
+    "data": "OSIS sekolah ingin mengetahui genre musik yang paling disukai siswa kelas 7 untuk menentukan tema musik pada acara pentas seni akhir semester. Setiap siswa diminta memilih satu genre musik favorit, lalu hasilnya dicatat oleh panitia.\n\n  Data Jumlah Siswa Berdasarkan Genre Musik Favorit\n12, 15, 10, 8, 12, 15, 10, 8, 12, 15,\n11, 8, 12, 15, 10, 8, 12, 15, 10, 9,\n12, 15, 10, 8, 12",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah siswa sebanyak 15 orang muncul berapa kali?",
+      "Jumlah siswa paling sedikit berada pada angka berapa orang?",
+      "Berapa selisih jumlah siswa terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Transportasi ke Sekolah",
+    "data": "Guru IPS melakukan survei mengenai transportasi yang digunakan siswa untuk pergi ke sekolah setiap hari. Data tersebut digunakan untuk mengetahui jenis kendaraan yang paling sering digunakan siswa agar sekolah dapat menyiapkan area parkir yang lebih baik.\n\n  Data Jumlah Pengguna Transportasi\n6, 8, 10, 12, 6, 8, 11, 12, 6, 8,\n10, 12, 6, 9, 10, 12, 6, 8, 10, 12,\n7, 8, 10, 12, 6",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengguna sebanyak 12 siswa muncul berapa kali?",
+      "Jumlah pengguna transportasi paling sedikit berada pada angka berapa siswa?",
+      "Berapa selisih jumlah pengguna terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Buku Tulis",
+    "data": "Koperasi sekolah mencatat jumlah buku tulis yang terjual selama minggu pertama tahun ajaran baru. Data tersebut digunakan untuk memperkirakan jumlah stok alat tulis yang harus disiapkan pada minggu berikutnya.\n\n  Data Jumlah Buku Tulis yang Terjual\n25, 28, 30, 35, 32, 28, 31, 35, 25, 28,\n30, 35, 32, 29, 30, 35, 25, 28, 30, 36,\n32, 28, 30, 35, 25",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 35 buku muncul berapa kali?",
+      "Jumlah penjualan paling sedikit berada pada angka berapa buku?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Durasi Belajar Siswa",
+    "data": "Wali kelas meminta siswa mencatat lama waktu belajar mereka di rumah setiap malam selama beberapa minggu. Data tersebut digunakan untuk mengetahui kebiasaan belajar siswa kelas 7 dan melihat apakah siswa sudah belajar secara rutin.\n\n  Data Lama Belajar Siswa\n1, 2, 3, 4, 2, 3, 4, 1, 2, 3,\n4, 1, 2, 3, 5, 1, 2, 3, 4, 1,\n2, 3, 4, 1, 2",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Lama belajar sebanyak 3 jam muncul berapa kali?",
+      "Lama belajar paling sedikit berada pada angka berapa jam?",
+      "Berapa selisih lama belajar terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Tiket Bioskop",
+    "data": "Sebuah bioskop mencatat jumlah tiket film animasi yang terjual selama masa liburan sekolah. Data tersebut digunakan untuk menentukan jadwal tambahan pemutaran film pada hari dengan jumlah penonton terbanyak.\n\n  Data Jumlah Tiket Bioskop yang Terjual\n40, 45, 50, 55, 60, 45, 50, 56, 60, 40,\n45, 50, 55, 60, 41, 45, 50, 55, 60, 40,\n45, 50, 55, 60, 40",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah tiket sebanyak 50 lembar muncul berapa kali?",
+      "Jumlah tiket tertinggi berada pada angka berapa lembar?",
+      "Berapa selisih jumlah tiket terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Pengunjung Kolam Renang",
+    "data": "Selama libur akhir semester, pengelola kolam renang mencatat jumlah pengunjung yang datang setiap hari. Data tersebut digunakan untuk menentukan jumlah petugas yang harus berjaga pada hari dengan jumlah pengunjung terbanyak.\n\n  Data Jumlah Pengunjung Kolam Renang\n70, 75, 80, 85, 90, 75, 80, 85, 91, 70,\n75, 80, 85, 90, 70, 75, 80, 86, 90, 70,\n75, 80, 85, 90, 70",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengunjung sebanyak 80 orang muncul berapa kali?",
+      "Jumlah pengunjung tertinggi berada pada angka berapa orang?",
+      "Berapa selisih jumlah pengunjung terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Hasil Latihan Basket",
+    "data": "Pelatih basket sekolah mencatat jumlah poin yang diperoleh siswa selama latihan menembak bola ke ring. Data tersebut digunakan untuk melihat perkembangan kemampuan siswa dalam bermain basket dan menentukan pemain inti tim sekolah.\n\n  Data Jumlah Poin Latihan Basket\n8, 10, 12, 14, 16, 10, 12, 14, 17, 8,\n10, 12, 14, 16, 8, 10, 13, 14, 16, 8,\n10, 12, 14, 16, 8",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah poin sebanyak 14 muncul berapa kali?",
+      "Jumlah poin tertinggi berada pada angka berapa?",
+      "Berapa selisih poin terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Buah Potong",
+    "data": "Sebuah toko buah mencatat jumlah cup buah potong yang terjual setiap hari selama musim panas. Data tersebut digunakan untuk mengetahui jenis makanan sehat yang paling diminati pelanggan selama cuaca panas berlangsung.\n\n  Data Jumlah Cup Buah Potong yang Terjual\n18, 20, 22, 24, 26, 20, 22, 24, 27, 18,\n20, 22, 24, 26, 18, 20, 23, 24, 26, 18,\n20, 22, 24, 26, 18",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 24 cup muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa cup?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penggunaan Aplikasi Belajar",
+    "data": "Guru TIK melakukan survei aplikasi belajar yang paling sering digunakan siswa kelas 7. Hasil survei tersebut akan digunakan untuk menentukan aplikasi yang akan dipakai pada pembelajaran digital berikutnya.\n\n  Data Jumlah Pengguna Aplikasi Belajar\n9, 12, 15, 18, 9, 12, 15, 18, 9, 13,\n15, 18, 9, 12, 15, 18, 9, 12, 16, 18,\n9, 12, 15, 18, 9",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengguna sebanyak 18 siswa muncul berapa kali?",
+      "Jumlah pengguna paling sedikit berada pada angka berapa siswa?",
+      "Berapa selisih jumlah pengguna terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Kue Cubit",
+    "data": "Penjual jajanan di depan sekolah mencatat jumlah kue cubit yang terjual setiap hari sepulang sekolah. Data tersebut digunakan untuk mengetahui rasa yang paling banyak dibeli siswa sehingga penjual dapat menambah stok bahan makanan.\n\n  Data Jumlah Kue Cubit yang Terjual\n15, 18, 20, 22, 25, 18, 20, 22, 25, 15,\n18, 20, 23, 25, 15, 18, 20, 22, 25, 15,\n18, 20, 22, 25, 15",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 25 kue muncul berapa kali?",
+      "Jumlah penjualan paling sedikit berada pada angka berapa kue?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Popcorn Bioskop",
+    "data": "Sebuah bioskop mencatat jumlah popcorn yang terjual setiap hari selama pemutaran film terbaru berlangsung. Data tersebut digunakan untuk menentukan jumlah stok jagung dan kemasan popcorn yang harus disiapkan pada akhir pekan.\n\n  Data Jumlah Popcorn yang Terjual\n20, 24, 28, 30, 34, 24, 28, 30, 35, 20,\n24, 28, 30, 34, 20, 24, 29, 30, 34, 20,\n24, 28, 30, 34, 20",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 30 popcorn muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa popcorn?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penggunaan Media Sosial",
+    "data": "Guru BK melakukan survei mengenai lama penggunaan media sosial siswa setiap hari. Data tersebut digunakan untuk mengetahui apakah siswa menggunakan media sosial secara berlebihan atau masih dalam batas yang wajar.\n\n  Data Lama Penggunaan Media Sosial\n1, 2, 3, 4, 2, 3, 4, 1, 2, 3,\n4, 1, 2, 3, 5, 1, 2, 3, 4, 1,\n2, 3, 4, 1, 2",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Lama penggunaan media sosial sebanyak 3 jam muncul berapa kali?",
+      "Lama penggunaan media sosial tertinggi berada pada angka berapa jam?",
+      "Berapa selisih penggunaan media sosial terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Susu Kotak",
+    "data": "Koperasi sekolah menjual susu kotak selama kegiatan olahraga pagi berlangsung. Petugas koperasi mencatat jumlah susu yang terjual agar mereka dapat mengetahui minuman yang paling banyak diminati siswa.\n\n  Data Jumlah Susu Kotak yang Terjual\n18, 20, 24, 26, 28, 20, 24, 26, 29, 18,\n20, 24, 26, 28, 18, 20, 24, 27, 28, 18,\n20, 24, 26, 28, 18",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 24 susu muncul berapa kali?",
+      "Jumlah penjualan paling sedikit berada pada angka berapa susu?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Pengunjung Perpustakaan Daerah",
+    "data": "Perpustakaan daerah mencatat jumlah pengunjung yang datang setiap hari selama bulan literasi berlangsung. Data tersebut digunakan untuk mengetahui tingkat minat baca masyarakat selama program berjalan.\n\n  Data Jumlah Pengunjung Perpustakaan Daerah\n40, 45, 48, 50, 55, 45, 48, 50, 56, 40,\n45, 48, 50, 55, 40, 45, 49, 50, 55, 40,\n45, 48, 50, 55, 40",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengunjung sebanyak 50 orang muncul berapa kali?",
+      "Jumlah pengunjung tertinggi berada pada angka berapa orang?",
+      "Berapa selisih jumlah pengunjung terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Ayam Geprek",
+    "data": "Sebuah warung makan mencatat jumlah porsi ayam geprek yang terjual setiap hari selama minggu pertama pembukaan. Data tersebut digunakan untuk mengetahui menu yang paling diminati pelanggan.\n\n  Data Jumlah Porsi Ayam Geprek yang Terjual\n22, 24, 28, 30, 34, 24, 28, 30, 35, 22,\n24, 28, 30, 34, 22, 24, 29, 30, 34, 22,\n24, 28, 30, 34, 22",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 28 porsi muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa porsi?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Hasil Latihan Lari",
+    "data": "Guru olahraga mencatat waktu tempuh siswa saat latihan lari keliling lapangan sekolah. Data tersebut digunakan untuk mengetahui perkembangan kemampuan fisik siswa selama latihan berlangsung.\n\n  Data Waktu Tempuh Lari Siswa\n5, 6, 7, 8, 6, 7, 8, 5, 6, 7,\n8, 5, 6, 7, 9, 5, 6, 7, 8, 5,\n6, 7, 8, 5, 6",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Waktu tempuh sebanyak 7 menit muncul berapa kali?",
+      "Waktu tempuh tercepat berada pada angka berapa menit?",
+      "Berapa selisih waktu tempuh terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Martabak Mini",
+    "data": "Penjual martabak mini mencatat jumlah kotak martabak yang terjual setiap malam selama akhir pekan. Data tersebut digunakan untuk menentukan jumlah bahan yang harus disiapkan agar tidak cepat habis.\n\n  Data Jumlah Martabak Mini yang Terjual\n15, 18, 20, 24, 26, 18, 20, 24, 27, 15,\n18, 20, 24, 26, 15, 18, 21, 24, 26, 15,\n18, 20, 24, 26, 15",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 24 kotak muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa kotak?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Jumlah Tanaman Hias",
+    "data": "Kelompok pecinta lingkungan sekolah mencatat jumlah tanaman hias yang berhasil dirawat setiap minggu. Data tersebut digunakan untuk mengetahui perkembangan program penghijauan sekolah.\n\n  Data Jumlah Tanaman Hias\n12, 15, 18, 20, 22, 15, 18, 20, 23, 12,\n15, 18, 20, 22, 12, 15, 19, 20, 22, 12,\n15, 18, 20, 22, 12",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah tanaman sebanyak 20 pot muncul berapa kali?",
+      "Jumlah tanaman terbanyak berada pada angka berapa pot?",
+      "Berapa selisih jumlah tanaman terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Bakso",
+    "data": "Penjual bakso di dekat sekolah mencatat jumlah mangkuk bakso yang terjual setiap sore. Data tersebut digunakan untuk mengetahui jam penjualan paling ramai dan menentukan jumlah stok bahan makanan.\n\n  Data Jumlah Bakso yang Terjual\n20, 24, 28, 30, 32, 24, 28, 30, 33, 20,\n24, 28, 30, 32, 20, 24, 29, 30, 32, 20,\n24, 28, 30, 32, 20",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 30 mangkuk muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa mangkuk?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Hasil Pengukuran Curah Hujan",
+    "data": "Petugas BMKG mencatat jumlah curah hujan yang turun setiap hari selama musim hujan berlangsung. Data tersebut digunakan untuk mengetahui perubahan cuaca dan membantu masyarakat mempersiapkan aktivitas sehari-hari.\n\n  Data Curah Hujan Harian\n10, 12, 15, 18, 20, 12, 15, 18, 21, 10,\n12, 15, 18, 20, 10, 12, 16, 18, 20, 10,\n12, 15, 18, 20, 10",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Curah hujan sebanyak 18 mm muncul berapa kali?",
+      "Curah hujan tertinggi berada pada angka berapa milimeter?",
+      "Berapa selisih curah hujan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Roti Bakar",
+    "data": "Sebuah kedai roti bakar mencatat jumlah roti yang terjual setiap malam selama musim liburan sekolah. Data tersebut digunakan untuk mengetahui menu yang paling diminati pelanggan dan menentukan jumlah bahan yang harus disiapkan setiap hari.\n\n  Data Jumlah Roti Bakar yang Terjual\n18, 22, 24, 28, 30, 22, 24, 28, 31, 18,\n22, 24, 28, 30, 18, 22, 25, 28, 30, 18,\n22, 24, 28, 30, 18",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 28 roti muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa roti?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Waktu Bermain Game Online",
+    "data": "Guru BK melakukan survei mengenai lama waktu bermain game online siswa setiap hari. Data tersebut digunakan untuk mengetahui apakah siswa sudah dapat membagi waktu bermain dan belajar dengan baik.\n\n  Data Lama Bermain Game Online\n1, 2, 3, 4, 2, 3, 4, 1, 2, 3,\n5, 1, 2, 3, 4, 1, 2, 3, 4, 1,\n2, 3, 4, 1, 2",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Lama bermain sebanyak 2 jam muncul berapa kali?",
+      "Lama bermain tertinggi berada pada angka berapa jam?",
+      "Berapa selisih waktu bermain terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Burger Mini",
+    "data": "Sebuah kafe mencatat jumlah burger mini yang terjual setiap hari selama promo akhir pekan berlangsung. Data tersebut digunakan untuk mengetahui makanan yang paling diminati pelanggan remaja.\n\n  Data Jumlah Burger Mini yang Terjual\n20, 24, 26, 30, 34, 24, 26, 30, 35, 20,\n24, 26, 30, 34, 20, 24, 27, 30, 34, 20,\n24, 26, 30, 34, 20",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 30 burger muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa burger?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Jumlah Penonton Pertandingan Sekolah",
+    "data": "Panitia class meeting mencatat jumlah penonton yang hadir pada setiap pertandingan olahraga antarkelas. Data tersebut digunakan untuk mengetahui cabang olahraga yang paling diminati siswa.\n\n  Data Jumlah Penonton Pertandingan\n45, 50, 55, 60, 65, 50, 55, 60, 66, 45,\n50, 55, 60, 65, 45, 50, 56, 60, 65, 45,\n50, 55, 60, 65, 45",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penonton sebanyak 60 orang muncul berapa kali?",
+      "Jumlah penonton tertinggi berada pada angka berapa orang?",
+      "Berapa selisih jumlah penonton terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Jus Alpukat",
+    "data": "Sebuah kedai minuman mencatat jumlah jus alpukat yang terjual setiap hari selama cuaca panas berlangsung. Data tersebut digunakan untuk menentukan jumlah buah alpukat yang harus disiapkan setiap harinya.\n\n  Data Jumlah Jus Alpukat yang Terjual\n16, 20, 24, 28, 30, 20, 24, 28, 31, 16,\n20, 24, 28, 30, 16, 20, 25, 28, 30, 16,\n20, 24, 28, 30, 16",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 28 gelas muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa gelas?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Jumlah Pengunjung Museum",
+    "data": "Sebuah museum kota mencatat jumlah pengunjung yang datang selama program wisata edukasi berlangsung. Data tersebut digunakan untuk mengetahui hari dengan jumlah pengunjung terbanyak.\n\n  Data Jumlah Pengunjung Museum\n30, 35, 40, 45, 50, 35, 40, 45, 51, 30,\n35, 40, 45, 50, 30, 35, 41, 45, 50, 30,\n35, 40, 45, 50, 30",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah pengunjung sebanyak 45 orang muncul berapa kali?",
+      "Jumlah pengunjung tertinggi berada pada angka berapa orang?",
+      "Berapa selisih jumlah pengunjung terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Pizza Mini",
+    "data": "Sebuah restoran cepat saji mencatat jumlah pizza mini yang terjual setiap hari selama promo pelajar berlangsung. Data tersebut digunakan untuk mengetahui menu favorit pelanggan selama masa promosi.\n\n  Data Jumlah Pizza Mini yang Terjual\n18, 22, 26, 30, 34, 22, 26, 30, 35, 18,\n22, 26, 30, 34, 18, 22, 27, 30, 34, 18,\n22, 26, 30, 34, 18",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 30 pizza muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa pizza?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Hasil Latihan Renang",
+    "data": "Pelatih renang sekolah mencatat jumlah putaran kolam yang berhasil diselesaikan siswa selama latihan berlangsung. Data tersebut digunakan untuk mengetahui perkembangan kemampuan berenang siswa.\n\n  Data Jumlah Putaran Renang\n4, 5, 6, 7, 8, 5, 6, 7, 9, 4,\n5, 6, 7, 8, 4, 5, 6, 7, 8, 4,\n5, 6, 7, 8, 4",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah putaran sebanyak 7 kali muncul berapa kali?",
+      "Jumlah putaran tertinggi berada pada angka berapa putaran?",
+      "Berapa selisih jumlah putaran terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Teh Boba",
+    "data": "Sebuah kedai minuman mencatat jumlah teh boba yang terjual setiap hari selama promo akhir bulan berlangsung. Data tersebut digunakan untuk mengetahui minuman yang paling diminati pelanggan remaja.\n\n  Data Jumlah Teh Boba yang Terjual\n20, 24, 28, 32, 36, 24, 28, 32, 37, 20,\n24, 28, 32, 36, 20, 24, 29, 32, 36, 20,\n24, 28, 32, 36, 20",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 32 gelas muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa gelas?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Jumlah Sepeda yang Diparkir",
+    "data": "Petugas keamanan sekolah mencatat jumlah sepeda yang diparkir siswa setiap hari. Data tersebut digunakan untuk mengetahui apakah area parkir sepeda perlu diperluas.\n\n  Data Jumlah Sepeda yang Diparkir\n12, 15, 18, 20, 24, 15, 18, 20, 25, 12,\n15, 18, 20, 24, 12, 15, 19, 20, 24, 12,\n15, 18, 20, 24, 12",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah sepeda sebanyak 20 buah muncul berapa kali?",
+      "Jumlah sepeda tertinggi berada pada angka berapa buah?",
+      "Berapa selisih jumlah sepeda terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  },
+  {
+    "title": "Penjualan Nasi Goreng",
+    "data": "Seorang penjual nasi goreng mencatat jumlah porsi yang terjual setiap malam selama musim liburan sekolah. Data tersebut digunakan untuk mengetahui hari dengan jumlah pembeli terbanyak sehingga penjual dapat menyiapkan bahan makanan yang cukup.\n\n  Data Jumlah Porsi Nasi Goreng yang Terjual\n22, 26, 30, 34, 38, 26, 30, 34, 39, 22,\n26, 30, 34, 38, 22, 26, 31, 34, 38, 22,\n26, 30, 34, 38, 22",
+    "tasks": [
+      "Buat tabel frekuensi pada Spreadsheet.",
+      "Buat diagram batang dari data tersebut.",
+      "Buat diagram garis dari data tersebut.",
+      "Jumlah penjualan sebanyak 34 porsi muncul berapa kali?",
+      "Jumlah penjualan tertinggi berada pada angka berapa porsi?",
+      "Berapa selisih jumlah penjualan terbesar dan terkecil?",
+      "Tuliskan kesimpulan singkat berdasarkan data tersebut.",
+      "Masukkan tabel frekuensi, diagram batang, diagram garis, dan seluruh jawaban ke Canva untuk dibuat poster."
+    ]
+  }
+];
+
+    const SPREADSHEET_LINK = "https://docs.google.com/spreadsheets/";
+    const spreadsheetLinks = {
+      "Charissa Nesiah Nyoto": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=0#gid=0",
+      "Cornelius Jeremy Pramono": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=410558313#gid=410558313",
+      "Craig Cristo Kuncoro": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1086666758#gid=1086666758",
+      "Edward Joshua Myles": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1265710141#gid=1265710141",
+      "Emanuella Gwen Kurniawan": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=571709699#gid=571709699",
+      "Gregory Christian Tafati Marunduri": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1932934436#gid=1932934436",
+      "Jefferson Kellen Turino": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1700687362#gid=1700687362",
+      "Jenevive Allina Liman": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=830224224#gid=830224224",
+      "Jeslyn De Lauwren": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=509649337#gid=509649337",
+      "Joel Haven Yuniman Tjandra": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1674266724#gid=1674266724",
+      "Maximus Michael Martien": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1569513713#gid=1569513713",
+      "Neiska Leann Nugroho": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=488267065#gid=488267065",
+      "Nicholas Ethan Theodore": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1147205589#gid=1147205589",
+      "Reinner Dominic Nugroho": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=196674727#gid=196674727",
+      "Reynard Julius Gunawan": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1865380622#gid=1865380622",
+      "Stefanie Griselda Cahyadi": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=1136458016#gid=1136458016",
+      "Steward Ethan Pangestu": "https://docs.google.com/spreadsheets/d/1SmWckILwSYa7ggJBSnGJNH1pENltTAIOK-458gSsveE/edit?gid=573631669#gid=573631669",
+      "Abigail Victoria Umboh": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=0#gid=0",
+      "Alvaro Gavriel Wijayanoto": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1903629931#gid=1903629931",
+      "Cayden Nathanael Bunardi": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=2098852936#gid=2098852936",
+      "Felix Kenzo Sidharta": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=674876660#gid=674876660",
+      "Fionette Ophelia Lasmono": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=435100067#gid=435100067",
+      "Grace Aileen Luntungan": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=981874528#gid=981874528",
+      "Guanglie Yu": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1880007830#gid=1880007830",
+      "Jillian Christabelle Chandra": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=752889498#gid=752889498",
+      "Joaquin Luiz Alexander": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1872196241#gid=1872196241",
+      "Jocelyn Anna Wijaya": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=196210767#gid=196210767",
+      "Kenneth Hery Ng": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1478045255#gid=1478045255",
+      "Kent Walden Wiyono": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1760819030#gid=1760819030",
+      "Matthew Kevin Sulistio": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1904689860#gid=1904689860",
+      "Nicolas Wayne Siady": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=106932874#gid=106932874",
+      "Osten Eduardo Gaidek": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1002095880#gid=1002095880",
+      "Shine Michael Tala": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=1072079490#gid=1072079490",
+      "Terra Emanuela Thungriallu": "https://docs.google.com/spreadsheets/d/1N5e2qYuiXS4Qg7ZaSoLu8K1I3OGuVfAzmGrRmhpomKM/edit?gid=129228096#gid=129228096",
+      "Aaron Chong": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=0#gid=0",
+      "Austin Rasyid Gandha": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=22154746#gid=22154746",
+      "Gilbert Theo Tjandra": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1110586188#gid=1110586188",
+      "Grace Adalee Wibisono": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1227459603#gid=1227459603",
+      "Ilona Seraphine Sutanto": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=281230911#gid=281230911",
+      "Jacqueline Winona Koestiono": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=2042316406#gid=2042316406",
+      "Jeremy Jonathan Gunawan": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=2106873667#gid=2106873667",
+      "Joshero Revanael Budiman": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1302447892#gid=1302447892",
+      "Jovina Ellen Setiawan": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1545596470#gid=1545596470",
+      "Lovina Laurentia Ho": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=808071526#gid=808071526",
+      "Marvelio Starenzo": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1459734592#gid=1459734592",
+      "Matthew Sutjiono": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=90753506#gid=90753506",
+      "Mikhael Evangel Pradana": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=112106144#gid=112106144",
+      "Miyuki Karensia Harsono": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1903273170#gid=1903273170",
+      "Nicolette Wynne Liman": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=398190924#gid=398190924",
+      "Samuel Billy Yuliyanto": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=1284038493#gid=1284038493",
+      "Tjan Owen Reynard Chandra": "https://docs.google.com/spreadsheets/d/11bQBa2mYkaeIaIsrbXa1XeTv4aS7AGc_Doi24MQN0M0/edit?gid=83990978#gid=83990978"
+    };
+
+    // Pemetaan soal unik untuk setiap siswa. Bubble hanya sebagai slot pilihan; soal ditentukan berdasarkan nama siswa.
+    const studentQuestionMap = {
+      "Charissa Nesiah Nyoto": 0,
+      "Cornelius Jeremy Pramono": 1,
+      "Craig Cristo Kuncoro": 2,
+      "Edward Joshua Myles": 3,
+      "Emanuella Gwen Kurniawan": 4,
+      "Gregory Christian Tafati Marunduri": 5,
+      "Jefferson Kellen Turino": 6,
+      "Jenevive Allina Liman": 7,
+      "Jeslyn De Lauwren": 8,
+      "Joel Haven Yuniman Tjandra": 9,
+      "Maximus Michael Martien": 10,
+      "Neiska Leann Nugroho": 11,
+      "Nicholas Ethan Theodore": 12,
+      "Reinner Dominic Nugroho": 13,
+      "Reynard Julius Gunawan": 14,
+      "Stefanie Griselda Cahyadi": 15,
+      "Steward Ethan Pangestu": 16,
+      "Abigail Victoria Umboh": 17,
+      "Alvaro Gavriel Wijayanoto": 18,
+      "Cayden Nathanael Bunardi": 19,
+      "Felix Kenzo Sidharta": 20,
+      "Fionette Ophelia Lasmono": 21,
+      "Grace Aileen Luntungan": 22,
+      "Guanglie Yu": 23,
+      "Jillian Christabelle Chandra": 24,
+      "Joaquin Luiz Alexander": 25,
+      "Jocelyn Anna Wijaya": 26,
+      "Kenneth Hery Ng": 27,
+      "Kent Walden Wiyono": 28,
+      "Matthew Kevin Sulistio": 29,
+      "Nicolas Wayne Siady": 30,
+      "Osten Eduardo Gaidek": 31,
+      "Shine Michael Tala": 32,
+      "Terra Emanuela Thungriallu": 33,
+      "Aaron Chong": 34,
+      "Austin Rasyid Gandha": 35,
+      "Gilbert Theo Tjandra": 36,
+      "Grace Adalee Wibisono": 37,
+      "Ilona Seraphine Sutanto": 38,
+      "Jacqueline Winona Koestiono": 39,
+      "Jeremy Jonathan Gunawan": 40,
+      "Joshero Revanael Budiman": 41,
+      "Jovina Ellen Setiawan": 42,
+      "Lovina Laurentia Ho": 43,
+      "Marvelio Starenzo": 44,
+      "Matthew Sutjiono": 45,
+      "Mikhael Evangel Pradana": 46,
+      "Miyuki Karensia Harsono": 47,
+      "Nicolette Wynne Liman": 48,
+      "Samuel Billy Yuliyanto": 49,
+      "Tjan Owen Reynard Chandra": 50
+    };
+
+    const FORM_BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeds9ACRNygxXutRxvgqS287szCUCGJZAht5SVtEL6gPj8OHg/viewform?usp=pp_url";
+
+    let selectedClass = "";
+    let selectedStudent = "";
+
+    const studentSelect = document.getElementById("studentSelect");
+    const loginPage = document.getElementById("loginPage");
+    const bubblePage = document.getElementById("bubblePage");
+    const bubbleGrid = document.getElementById("bubbleGrid");
+    const questionCard = document.getElementById("questionCard");
+    const studentChip = document.getElementById("studentChip");
+
+    function selectClass(className) {
+      selectedClass = className;
+      document.querySelectorAll(".class-bubble").forEach(el => el.classList.remove("active"));
+      event.currentTarget.classList.add("active");
+
+      studentSelect.innerHTML = '<option value="">Pilih nama siswa</option>';
+      students[className].forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        studentSelect.appendChild(option);
+      });
+    }
+
+    function enterBubblePage() {
+      selectedStudent = studentSelect.value;
+      if (!selectedClass) return alert("Pilih kelas terlebih dahulu.");
+      if (!selectedStudent) return alert("Pilih nama siswa terlebih dahulu.");
+
+      const existingLock = getLock();
+      if (existingLock) {
+        selectedClass = existingLock.className;
+        selectedStudent = existingLock.studentName;
+        showLockedQuestion(existingLock);
+        return;
+      }
+
+      loginPage.classList.add("hidden");
+      bubblePage.classList.remove("hidden");
+      studentChip.textContent = `Kelas: ${selectedClass} | Nama: ${selectedStudent}`;
+      renderQuestionBubbles();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestionBubbles() {
+      bubbleGrid.innerHTML = "";
+      for (let i = 1; i <= 17; i++) {
+        const bubble = document.createElement("div");
+        bubble.className = `question-bubble c${i}`;
+        bubble.innerHTML = `${i}<span>Pilih</span>`;
+        bubble.style.animationDelay = `${i * 0.08}s`;
+        bubble.onclick = () => chooseBubble(i);
+        bubbleGrid.appendChild(bubble);
+      }
+    }
+
+    function getQuestionIndex(className, bubbleNumber, studentName) {
+      // Bubble yang dipilih hanya menjadi slot pilihan.
+      // Soal dibuat unik berdasarkan nama siswa agar dua siswa yang memilih bubble sama tetap mendapat soal berbeda.
+      if (Object.prototype.hasOwnProperty.call(studentQuestionMap, studentName)) {
+        return studentQuestionMap[studentName];
+      }
+
+      // Cadangan jika nama siswa belum ada di pemetaan.
+      const classOffset = { "7A": 0, "7B": 17, "7C": 34 };
+      return classOffset[className] + bubbleNumber - 1;
+    }
+
+    function chooseBubble(bubbleNumber) {
+      const existingLock = getLock();
+      if (existingLock) {
+        alert("Kamu sudah memilih bubble dan tidak bisa mengganti pilihan.");
+        showLockedQuestion(existingLock);
+        return;
+      }
+
+      const confirmation = confirm("Setelah memilih bubble ini, kamu tidak bisa mengganti pilihan. Lanjutkan?");
+      if (!confirmation) return;
+
+      const questionIndex = getQuestionIndex(selectedClass, bubbleNumber, selectedStudent);
+      const lockData = {
+        className: selectedClass,
+        studentName: selectedStudent,
+        bubbleNumber,
+        questionIndex,
+        lockedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem("satBubbleLock", JSON.stringify(lockData));
+      showLockedQuestion(lockData);
+    }
+
+    function getLock() {
+      const data = localStorage.getItem("satBubbleLock");
+      return data ? JSON.parse(data) : null;
+    }
+
+    function showLockedQuestion(lockData) {
+      const question = questionBank[lockData.questionIndex];
+      loginPage.classList.add("hidden");
+      bubblePage.classList.remove("hidden");
+      questionCard.style.display = "block";
+      studentChip.textContent = `Kelas: ${lockData.className} | Nama: ${lockData.studentName} | Bubble: ${lockData.bubbleNumber}`;
+
+      renderQuestionBubbles();
+      document.querySelectorAll(".question-bubble").forEach((bubble, index) => {
+        bubble.classList.add("locked");
+        if (index + 1 === lockData.bubbleNumber) {
+          bubble.innerHTML = `${lockData.bubbleNumber}<span>Dipilih</span>`;
+        } else {
+          bubble.innerHTML = `X<span>Terkunci</span>`;
+        }
+      });
+
+      document.getElementById("questionTitle").textContent = `Bubble ${lockData.bubbleNumber} — ${question.title}`;
+      document.getElementById("identityText").textContent = `${lockData.studentName} | Kelas ${lockData.className}`;
+      document.getElementById("questionData").textContent = question.data;
+
+      const studentSpreadsheet = spreadsheetLinks[lockData.studentName] || SPREADSHEET_LINK;
+      document.getElementById("spreadsheetLink").href = studentSpreadsheet;
+      document.getElementById("submitLink").href = buildSubmitLink(lockData);
+
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      const taskQuestions = makeTaskQuestions(question);
+      taskQuestions.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = task;
+        taskList.appendChild(li);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function getRandomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function makeTaskQuestions(question) {
+      return question.tasks;
+    }
+
+
+    function buildSubmitLink(lockData) {
+      const bubbleLabel = "Question " + lockData.bubbleNumber;
+
+      return FORM_BASE_URL +
+        "&entry.1475710590=" + encodeURIComponent(lockData.studentName) +
+        "&entry.765330407=" + encodeURIComponent(lockData.className) +
+        "&entry.1746386274=" + encodeURIComponent(bubbleLabel);
+    }
+
+    function resetForTeacher() {
+      const password = prompt("Masukkan password guru untuk reset:");
+      if (password !== "soca13467955") {
+        alert("Password salah.");
+        return;
+      }
+      localStorage.removeItem("satBubbleLock");
+      location.reload();
+    }
+
+    window.addEventListener("beforeunload", function (e) {
+      if (getLock()) {
+        e.preventDefault();
+        e.returnValue = "Pilihan bubble sudah terkunci. Jangan refresh halaman.";
+      }
+    });
+
+    window.addEventListener("load", () => {
+      const existingLock = getLock();
+      if (existingLock) showLockedQuestion(existingLock);
+    });
+  </script>
+</body>
+</html>
